@@ -1,4 +1,4 @@
-#Engine
+# Engine
 
 this engine is going to be a windows platform engine for 3d games build/compiled and debugged in MVS
 
@@ -6,7 +6,7 @@ here are the main features i will add to this engine time by time
 
 each added feature will be marked ✅
 
-#1. Core Engine Infrastructure
+# 1. Core Engine Infrastructure
 
 Platform Abstraction Layer
 
@@ -34,7 +34,7 @@ Resource Management
 
 Reference-counted handles, hot-reload support
 
-#2. Rendering Subsystem
+# 2. Rendering Subsystem
 
 Graphics Context & Swap Chain
 
@@ -60,7 +60,7 @@ Post-Processing Pipeline
 
 Framebuffers, fullscreen passes, tone mapping
 
-#3. Input System
+# 3. Input System
 
 Keyboard & Mouse
 
@@ -70,7 +70,7 @@ Input Mapping
 
 Action-to-key bindings, rebinding UI
 
-#4. Audio Subsystem
+# 4. Audio Subsystem
 
 Low-Level Audio API
 
@@ -84,7 +84,7 @@ One-shots, streaming music, channel groups
 
 Attenuation, Doppler effect
 
-#5. Scene & Entity Management
+# 5. Scene & Entity Management
 
 Entity Component System (ECS) or Scene Graph
 
@@ -92,7 +92,7 @@ Transform Hierarchy
 
 Serialization & Prefabs
 
-#6. Physics & Collision
+# 6. Physics & Collision
 
 Collision Primitives (AABB, sphere, plane)
 
@@ -102,7 +102,7 @@ Narrowphase (GJK, SAT)
 
 Rigid-Body Solver (Euler/Verlet integrator, contact resolution)
 
-#7. Animation System
+# 7. Animation System
 
 Keyframed Transforms
 
@@ -110,7 +110,7 @@ Skeletal Animation (bone palettes, skinning)
 
 Tweening/Curve Interpolation
 
-#8. UI & Debug Tools
+# 8. UI & Debug Tools
 
 Immediate-Mode GUI (your own IMGUI)
 
@@ -118,7 +118,7 @@ In-Engine Debug Overlay (FPS, draw calls, scene inspector)
 
 Console & Profiler Hooks
 
-#9. Scripting & Gameplay Logic
+# 9. Scripting & Gameplay Logic
 
 Embedded VM or DSL (you could roll a tiny bytecode interpreter)
 
@@ -126,7 +126,7 @@ Bindings for engine APIs (entities, resources, events)
 
 Hot-Reloading of scripts
 
-#10. Networking 
+# 10. Networking 
 
 Socket Layer (UDP/TCP abstraction)
 
@@ -134,7 +134,7 @@ Packet Serialization (endianness, checksums)
 
 High-Level API (RPC, state sync)
 
-#11. Tooling & Editors
+# 11. Tooling & Editors
 
 Level/Scene Editor (standalone or built into the engine)
 
