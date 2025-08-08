@@ -96,3 +96,17 @@ bool platform_read_file(const char* path, void** out_data, size_t* out_size) {
 void platform_free_file(void* data) {
 	free(data);
 }
+
+/* Threading */
+typedef void* (*PlatformThreadFunc)(void* arg);
+typedef struct { void* handle; } PlatformThread;
+
+PlatformThread platform_thread_create(PlatformThreadFunc fn, void* arg) {
+	HANDLE h = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)fn, arg, 0, NULL);
+	return (PlatformThread) { .handle = h };
+}
+
+void platform_thread_join(PlatformThread t) {
+	WaitForSingleObject(t.handle, INFINITE);
+	CloseHandle(t.handle);
+}
