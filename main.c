@@ -1,6 +1,10 @@
 #include <windows.h>
 #include <stdio.h>
+#include <stdint.h>
+#include <stdbool.h>
 
+
+#include "platform.h"
 #include "main_win_proc.h"
 
 int WINAPI WinMain(
@@ -8,35 +12,32 @@ int WINAPI WinMain(
     _In_opt_ HINSTANCE hPrevInstance,
     _In_ LPSTR lpCmdLine,
     _In_ int nCmdShow) {
-    const wchar_t CLASS_NAME[] = L"MyWindowClass";
 
-    WNDCLASS wc = { 0 };
-    wc.lpfnWndProc = WindowProc;
-    wc.hInstance = hInstance;
-    wc.lpszClassName = CLASS_NAME;
-    wc.hbrBackground = NULL; // We fully handle background ourselves
-    wc.style = CS_HREDRAW | CS_VREDRAW;
-    wc.hCursor = LoadCursor(NULL, IDC_ARROW); //Set a default cursor
+    if (!platform_init()) return EXIT_FAILURE;
 
-    RegisterClass(&wc);
+    PlatformWindow win=platform_create_window(&(PlatformWindowDesc){
+        .width = 900,
+        .height = 900,
+        .title = "My Engine Window"
+	});
 
-    HWND hwnd = CreateWindowEx(
-        0,
-        CLASS_NAME,
-        L"Scripting",
-        WS_OVERLAPPEDWINDOW | WS_VISIBLE,
-        (GetSystemMetrics(SM_CXSCREEN) - 900) / 2,
-        (GetSystemMetrics(SM_CYSCREEN) - 900) / 2,
-        900,
-        900,
-        NULL, NULL, hInstance, NULL
-    );
+	double last_time = platform_get_time();
+    while (!win.should_close) {
 
-    MSG msg = { 0 };
-    while (GetMessage(&msg, NULL, 0, 0)) {
-        TranslateMessage(&msg);
-        DispatchMessage(&msg);
+
+		platform_poll_events(&win);		// Update and render logic here
+
+        double current_time = platform_get_time();
+		double delta_time = current_time - last_time;
+        last_time = current_time;
+
+			//TODO : update_game_logic(delta_time);
+			//TODO : render_game();
+
+			// For demonstration, just print the delta time
+			//platform_sleep(1.0/60.0 -delta_time); // Sleep to maintain 60 FPS
     }
 
-    return 0;
+    platform_cleanup();
+	return EXIT_SUCCESS;
 }
