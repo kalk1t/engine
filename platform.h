@@ -57,3 +57,19 @@ double platform_get_time(void) {
 void platform_cleanup(void) {
 	// No specific cleanup needed for this simple platform abstraction
 }
+
+
+/*Input*/
+bool   platform_key_down(int key) {
+	return (GetAsyncKeyState(key) & 0x8000) != 0;
+}
+
+void platform_cursor_pos(double * x, double* y) {
+	POINT p;
+	GetCursorPos(&p);
+	*x = (double)p.x;
+	*y = (double)p.y;
+}
+
+
+
