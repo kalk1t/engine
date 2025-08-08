@@ -72,4 +72,27 @@ void platform_cursor_pos(double * x, double* y) {
 }
 
 
+/* FILE I/O */
+bool platform_read_file(const char* path, void** out_data, size_t* out_size) {
+	FILE* f = fopen(path, "rb");
+	if (!f) return false;
+	fseek(f, 0, SEEK_END);
+	long sz = ftell(f);
+	rewind(f);
+	void* buf = malloc(sz);
+	if (!buf) { fclose(f); return false; }
+	if (fread(buf, 1, sz, f) != (size_t)sz) {
+		free(buf);
+		fclose(f);
+		return false;
+	}
+	fclose(f);
+	*out_data = buf;
+	*out_size = (size_t)sz;
+	return true;
+}
 
+
+void platform_free_file(void* data) {
+	free(data);
+}
