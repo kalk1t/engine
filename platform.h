@@ -110,3 +110,48 @@ void platform_thread_join(PlatformThread t) {
 	WaitForSingleObject(t.handle, INFINITE);
 	CloseHandle(t.handle);
 }
+
+/* Mutex */
+typedef struct { void* handle; } PlatformMutex;
+void platform_mutex_init(PlatformMutex* m) {
+	CRITICAL_SECTION* cs = malloc(sizeof(CRITICAL_SECTION));
+	InitializeCriticalSection(cs);
+	m->handle = cs;
+}
+
+void platform_mutex_lock(PlatformMutex* m) {
+	EnterCriticalSection((CRITICAL_SECTION*)m->handle);
+}
+
+void platform_mutex_unlock(PlatformMutex* m) {
+	LeaveCriticalSection((CRITICAL_SECTION*)m->handle);
+}
+
+void platform_mutex_destroy(PlatformMutex* m) {
+	DeleteCriticalSection((CRITICAL_SECTION*)m->handle);
+	free(m->handle);
+}
+
+/* Dynamic Libraries */
+typedef struct { void* handle; } PlatformLibrary;
+PlatformLibrary platform_load_library(const char* path) {
+	HMODULE mod = LoadLibraryA(path);
+	return (PlatformLibrary) { .handle = mod };
+}
+
+void* platform_get_proc(PlatformLibrary lib, const char* name) {
+	return GetProcAddress((HMODULE)lib.handle, name);
+}
+
+void platform_unload_library(PlatformLibrary lib) {
+	FreeLibrary((HMODULE)lib.handle);
+}
+
+/* Memory */
+void* platform_alloc(size_t size) {
+	return malloc(size);
+}
+
+void platform_free(void* ptr) {
+	free(ptr);
+}
