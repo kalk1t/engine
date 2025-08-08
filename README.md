@@ -8,7 +8,7 @@ each added feature will be marked ✅
 
 # 1. Core Engine Infrastructure
 
-Platform Abstraction Layer
+Platform Abstraction Layer  ✅
 
 High-resolution timer, threads, mutexes
 
